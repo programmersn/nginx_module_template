@@ -1,0 +1,20 @@
+# Cf. https://www.nginx.com/resources/wiki/extending/converting/#converting-a-config-file
+#     https://www.nginx.com/resources/wiki/extending/new_config/
+
+ngx_addon_dir=#dirname
+
+if test -n "$ngx_module_link"; then   
+    # Dynamic Module Support
+    ngx_module_type=#e.g HTTP
+    ngx_module_name=#modulename 
+    ngx_module_srcs="$ngx_addon_dir/"# srcfile ...
+
+    . auto/module
+
+else 
+    # Static Module Support
+    HTTP_MODULES="$HTTP_MODULES "#modulename
+    NGX_ADDON_SRCS="$NGINX_ADDON_SRCS $ngx_addon_dir/"#srcfile ...
+fi
+
+ngx_addon_name="$ngx_module_name"
