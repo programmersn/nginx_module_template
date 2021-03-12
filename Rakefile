@@ -16,16 +16,23 @@ namespace :nginx do
     `./build/nginx/sbin/nginx -s stop`
   end
 
-  desc "Recompiles nginx"
+  desc "Recompiles nginx module"
   task :compile do 
-    sh "./scripts/nginx-compile.sh"
+    `./scripts/nginx-compile-module.sh modules`
   end
 end
 
-desc "Bootstraps the local development environment"
-task :bootstrap do 
-  unless Dir.exists?("build") and Dir.exists?("vendor") 
-    sh "./scripts/nginx-bootstrap.sh"
+namespace :env do
+  desc "Bootstraps the local development environment"
+  task :bootstrap do 
+    unless Dir.exists?("build") and Dir.exists?("vendor") 
+      `./scripts/nginx-bootstrap.sh`
+    end
+  end
+
+  desc "Clean local development environment"
+  task :clean do
+    `./scripts/nginx-bootstrap.sh clean`
   end
 end
 
